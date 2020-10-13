@@ -1,22 +1,46 @@
 <template>
   <div class="home">
     <div class="team-list">
-      <div class="team-item" v-for="team in teams" :key="team.id">
-        {{ team.name }}
+      <div class="team-item" v-for="(team, index) in teams" :key="index">
+        <div class="team-logo">
+          <!-- {{ team.logos }} -->
+          <!-- <img :src="team.logos[0]"/> -->
+        </div>
+        <div class="team-school">
+          {{ team.school }}
+          </div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
+import { fetchTeams } from '@/api/api'
+import { Team } from '@/store/models'
 
 export default defineComponent({
-  name: 'Home',
-  data () {
+  setup () {
+    const teams = ref<Team[]>([])
+    const getTeams = async () => {
+      teams.value = await fetchTeams()
+      console.log(teams.value[0].logos[0])
+    }
+    onMounted(getTeams)
+
     return {
-      teams: [{ id: 0, name: 'team a' }, { id: 1, name: 'team b' }, { id: 2, name: 'team c' }]
+      teams,
+      getTeams
     }
   }
 })
 </script>
+
+.<style lang="scss" scoped>
+$width: 250px;
+
+.team-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($width, 1fr))
+}
+</style>
