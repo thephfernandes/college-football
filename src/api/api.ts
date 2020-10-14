@@ -17,7 +17,7 @@ export async function fetchTeams (): Promise<Team[]> {
   }
 }
 
-export async function fetchSeasonGamesByTeam (season: number, school: string): Promise<Game[]> {
+export async function fetchSeasonGamesByTeam (season: number, school: string | undefined): Promise<Game[]> {
   try {
     const res = await ApiClient.get('games', {
       params: {
