@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Team } from '@/store/models'
+import { Game, Team } from '@/store/models'
 
 const config = {
   baseURL: 'https://api.collegefootballdata.com/',
@@ -17,16 +17,16 @@ export async function fetchTeams (): Promise<Team[]> {
   }
 }
 
-// export async function fetchGamesByTeam(team: string | undefined ): Promise<
-// export async function fetchTeamById (teamId: string | undefined): Promise<Team> {
-//   try {
-//     const res = await ApiClient.get('teams', {
-//       params: {
-//         id: teamId
-//       }
-//     })
-//     return res.data as Team
-//   } catch (error) {
-//     throw new Error(`API ${error}`)
-//   }
-// }
+export async function fetchSeasonGamesByTeam (season: number, school: string): Promise<Game[]> {
+  try {
+    const res = await ApiClient.get('games', {
+      params: {
+        year: season,
+        team: school
+      }
+    })
+    return res.data as Game[]
+  } catch (error) {
+    throw new Error(`API ${error}`)
+  }
+}

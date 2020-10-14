@@ -1,16 +1,10 @@
 <template>
   <div class="home">
-    <div class="team-list">
+    <keep-alive>
+      <div class="team-list">
       <TeamItem v-for="team in teams"  :key="team.id" :school="team.school" :logo="getTeamLogo(team)"/>
-      <!-- <div class="team-item" v-for="(team, index) in teams" :key="index">
-        <router-link :to="{ path: '/teams/' + team.school}">
-        </div>
-        <div class="team-school">
-          {{ team.school }}
-          </div>
-          </router-link>
-      </div> -->
     </div>
+    </keep-alive>
   </div>
 </template>
 

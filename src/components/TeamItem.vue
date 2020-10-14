@@ -1,11 +1,13 @@
 <template>
   <div class="team-item">
-    <div class="team-logo">
-      <img :src="logo" alt="team logo" />
-    </div>
-    <div class="team-title">
-      {{ school }}
-    </div>
+    <router-link :to="{ path: '/teams/' + school }">
+      <div class="team-logo">
+        <img :src="logo" alt="team logo" />
+      </div>
+      <div class="team-title">
+        {{ school }}
+      </div>
+    </router-link>
   </div>
 </template>
 
