@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.20.0",
+    "buefy": "^0.9.3",
     "core-js": "^3.6.5",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
@@ -39,6 +40,7 @@
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
+    "vue-cli-plugin-vuetify": "~2.0.7",
     "vue-jest": "^5.0.0-0"
   }
 }

@@ -16,3 +16,17 @@ export async function fetchTeams (): Promise<Team[]> {
     throw new Error(`API ${error}`)
   }
 }
+
+// export async function fetchGamesByTeam(team: string | undefined ): Promise<
+// export async function fetchTeamById (teamId: string | undefined): Promise<Team> {
+//   try {
+//     const res = await ApiClient.get('teams', {
+//       params: {
+//         id: teamId
+//       }
+//     })
+//     return res.data as Team
+//   } catch (error) {
+//     throw new Error(`API ${error}`)
+//   }
+// }

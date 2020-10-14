@@ -1,36 +1,50 @@
 <template>
   <div class="home">
     <div class="team-list">
-      <div class="team-item" v-for="(team, index) in teams" :key="index">
-        <div class="team-logo">
-          <!-- {{ team.logos }} -->
-          <!-- <img :src="team.logos[0]"/> -->
+      <TeamItem v-for="team in teams"  :key="team.id" :school="team.school" :logo="getTeamLogo(team)"/>
+      <!-- <div class="team-item" v-for="(team, index) in teams" :key="index">
+        <router-link :to="{ path: '/teams/' + team.school}">
         </div>
         <div class="team-school">
           {{ team.school }}
           </div>
-      </div>
+          </router-link>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
+import TeamItem from '@/components/TeamItem.vue'
 import { fetchTeams } from '@/api/api'
 import { Team } from '@/store/models'
 
 export default defineComponent({
+  components: {
+    TeamItem
+  },
+
   setup () {
     const teams = ref<Team[]>([])
     const getTeams = async () => {
       teams.value = await fetchTeams()
-      console.log(teams.value[0].logos[0])
     }
     onMounted(getTeams)
 
     return {
       teams,
       getTeams
+    }
+  },
+
+  methods: {
+    getTeamLogo (team: Team): string {
+      if (team.logos) {
+        return team.logos[0]
+      } else {
+        return ''
+      }
     }
   }
 })
@@ -41,6 +55,7 @@ $width: 250px;
 
 .team-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax($width, 1fr))
+  grid-template-columns: repeat(auto-fit, minmax($width, 1fr));
+  grid-gap: 1em;
 }
 </style>
