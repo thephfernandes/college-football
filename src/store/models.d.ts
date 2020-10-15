@@ -57,3 +57,11 @@ export interface Record {
     losses: number
     ties: number
 }
+
+export interface TeamSeasonStat {
+    season: number,
+    team: string,
+    conference: string,
+    statName: string,
+    statValue: number
+}

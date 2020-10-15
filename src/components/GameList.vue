@@ -5,14 +5,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent } from 'vue'
 import { Game } from '@/store/models'
 import GameItem from '@/components/GameItem.vue'
 
 export default defineComponent({
   props: {
-    school: String,
-    games: Object as PropType<Game[]>,
+    games: Object as () => Game[],
     season: Number
   },
   components: {
