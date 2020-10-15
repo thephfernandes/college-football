@@ -14,15 +14,24 @@
       </div>
 
       <div class="teams-info">
-        <div class="home-team-info">
-          {{ game.home_team }}
-          {{ game.home_points}}
+          <div class="home-team">
+              {{ game.home_team }}
+            </div>
+          <div class="home-team-score">
+              {{ formatScore(game.home_points) }}
+          </div>
+
+          <div class="away-team">
+              {{ game.away_team }}
+            </div>
+          <div class="away-team-score">
+            {{ formatScore(game.away_points) }}
+          </div>
+        <!-- <div class="home team-info">
         </div>
 
-        <div class="away-team-info">
-          {{ game.away_team }}
-          {{ game.away_points }}
-        </div>
+        <div class="away team-info">
+        </div> -->
       </div>
   </div>
 </template>
@@ -38,10 +47,17 @@ export default defineComponent({
 
   methods: {
     formatDate (date: string): string {
-      const year = date.slice(0, 4)
       const month = date.slice(5, 7)
       const day = date.slice(8, 10)
-      return day + '/' + month + '/' + year
+      return day + '/' + month
+    },
+
+    formatScore (score: number): number | string {
+      if (score) {
+        return score
+      } else {
+        return '-'
+      }
     }
   }
 })
@@ -52,7 +68,7 @@ export default defineComponent({
     -webkit-box-shadow: rgba(0, 0, 0, 0.0588235) 0px 3px 4px 0px;
     -moz-box-shadow: rgba(0, 0, 0, 0.0588235) 0px 3px 4px 0px;
     box-shadow: rgba(0, 0, 0, 0.0588235) 0px 3px 4px 0px;
-    width: 500px;
+    width: 525px;
     padding: 15px 5px;
 
     .match-info {
@@ -67,10 +83,16 @@ export default defineComponent({
     }
 
     .teams-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
-    grid-gap: 1em;
     font-size: 30px;
+    height: 75px;
+    padding-top: 10px;
+    display: grid;
+    grid-template-columns: auto auto;
+
+        // .team-info {
+        //     display: flex;
+        //     justify-content: space-around;
+        // }
     }
 }
 </style>

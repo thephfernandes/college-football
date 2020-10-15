@@ -1,10 +1,6 @@
 <template>
   <div class="game-list">
       <GameItem v-for="game in games" :key="game.id" :game="game"/>
-      <!-- <div class="game-item" v-for="game in games" :key="game.id">
-          Game ID: {{ game.id }}
-          <br>
-      </div> -->
   </div>
 </template>
 
@@ -24,3 +20,12 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss" scoped>
+
+.game-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(525px, 1fr));
+    grid-gap: 1em;
+}
+</style>

@@ -2,7 +2,7 @@
   <div class="home">
     <keep-alive>
       <div class="team-list">
-      <TeamItem v-for="team in teams"  :key="team.id" :school="team.school" :logo="getTeamLogo(team)"/>
+      <TeamItem v-for="team in teams" :key="team.id" :school="team.school" :logo="getTeamLogo(team)"/>
     </div>
     </keep-alive>
   </div>
