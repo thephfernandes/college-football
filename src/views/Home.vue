@@ -37,7 +37,7 @@ export default defineComponent({
       if (team.logos) {
         return team.logos[0]
       } else {
-        return ''
+        return '../assets/altLogo.png'
       }
     }
   }

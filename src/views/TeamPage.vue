@@ -1,7 +1,6 @@
 .<template>
   <div class="team-page">
-    <h1>{{ school }}</h1>
-    <input v-model="season" type="number" id="season-select" name="season" min="1869" max="2020">
+    <h1>{{ school }} in <input v-model="season" type="number" id="season-select" name="season" min="1869" max="2020"></h1>
     <GameList :school="school" :games="games" :season="season"/>
   </div>
 </template>
