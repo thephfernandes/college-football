@@ -61,14 +61,6 @@ export default defineComponent({
     }
   },
 
-  // methods: {
-  //   async getLogo (school: string): Promise<void> {
-  //     await getTeamLogo(school).then(response => {
-  //       this.logo = response
-  //     })
-  //   }
-  // },
-
   watch: {
     async season (value: number) {
       this.games = await fetchSeasonGamesByTeam(value, this.school)
@@ -87,6 +79,14 @@ export default defineComponent({
     .team-logo {
       max-width: 75px;
       padding-right: 20px;
+    }
+
+    input {
+      border: none;
+      font-size: inherit;
+    }
+    input[type=number]::-webkit-inner-spin-button {
+      opacity: 1;
     }
   }
 }

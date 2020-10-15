@@ -1,6 +1,6 @@
 <template>
   <div class="team-season-stats">
-     {{ stats[0] }}
+     <SeasonStatItem v-for="(stat, index) in stats" :key="index" :stat="stat"/>
   </div>
 </template>
 
@@ -8,11 +8,16 @@
 import { defineComponent, onMounted, ref } from 'vue'
 import { TeamSeasonStat } from '@/store/models'
 import { getStats } from '@/api/api'
+import SeasonStatItem from '@/components/SeasonStatItem.vue'
 
 export default defineComponent({
   props: {
     school: String,
     season: Number
+  },
+
+  components: {
+    SeasonStatItem
   },
 
   setup (props) {
@@ -27,6 +32,22 @@ export default defineComponent({
       stats,
       getTeamStats
     }
+  },
+
+  watch: {
+    season (value) {
+      this.getTeamStats()
+    }
   }
 })
 </script>
+.<style lang="scss" scoped>
+.team-season-stats {
+  display: inline-grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 1em;
+  padding: 20px 50px;
+  width: 70%;
+
+}
+</style>

@@ -23,8 +23,10 @@ export default defineComponent({
 <style lang="scss" scoped>
 
 .game-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(525px, 1fr));
+    display: inline-grid;
+    margin-left: auto;
+    width: 85vw;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 1em;
 }
 </style>

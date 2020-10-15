@@ -21,13 +21,13 @@ export async function fetchTeamBySchoolName (school: string | undefined): Promis
   try {
     const res = await ApiClient.get('teams')
     const allTeams = res.data as Team[]
-    return allTeams.find((team: Team) => team.school == school) as Team
+    return allTeams.find((team: Team) => team.school === school) as Team
   } catch (error) {
     throw new Error(`API ${error}`)
   }
 }
 
-export async function getTeamLogo(school: string | undefined): Promise<string> {
+export async function getTeamLogo (school: string | undefined): Promise<string> {
   const team = await fetchTeamBySchoolName(school)
   return team.logos[0]
 }
