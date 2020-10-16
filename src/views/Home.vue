@@ -1,8 +1,9 @@
 <template>
   <div class="home">
+    <input type="text" v-model="search" placeholder="search...">
     <keep-alive>
       <div class="team-list">
-      <TeamItem v-for="team in teams" :key="team.id" :school="team.school" :logo="getTeamLogo(team)"/>
+      <TeamItem v-for="team in filteredTeams" :key="team.id" :school="team.school" :logo="getTeamLogo(team)"/>
     </div>
     </keep-alive>
   </div>
@@ -17,6 +18,12 @@ import { Team } from '@/store/models'
 export default defineComponent({
   components: {
     TeamItem
+  },
+
+  data () {
+    return {
+      search: ''
+    }
   },
 
   setup () {
@@ -39,6 +46,14 @@ export default defineComponent({
       } else {
         return '../assets/altLogo.png'
       }
+    }
+  },
+
+  computed: {
+    filteredTeams (): Team[] {
+      return this.teams.filter((team: Team) => {
+        return team.school.toLocaleLowerCase().includes(this.search.toLocaleLowerCase())
+      })
     }
   }
 })

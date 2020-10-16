@@ -34,10 +34,10 @@ export interface Team {
     alt_name_2: string,
     alt_name_3: string,
     conference: string,
-    division: string, 
+    division: string,
     color: string,
     alt_color: string,
-    logos: [string]
+    logos: string[]
 }
 
 export interface TeamRecord {
@@ -57,6 +57,26 @@ export interface Record {
     losses: number
     ties: number
 }
+
+export interface Stat {
+    category: string,
+    stat: string,
+}
+
+
+export interface TeamGame {
+    id: number,
+    teams: TeamStat[]
+}
+
+export interface TeamStat {
+    school: string,
+    conference: string,
+    homeAway: string,
+    points: number,
+    stats: Stat[]
+}
+
 
 export interface TeamSeasonStat {
     season: number,

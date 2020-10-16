@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Game, Team, TeamSeasonStat } from '@/store/models'
+import { Game, Team, TeamSeasonStat, TeamGame, TeamStat } from '@/store/models'
 
 const config = {
   baseURL: 'https://api.collegefootballdata.com/',
@@ -30,6 +30,29 @@ export async function fetchTeamBySchoolName (school: string | undefined): Promis
 export async function getTeamLogo (school: string | undefined): Promise<string> {
   const team = await fetchTeamBySchoolName(school)
   return team.logos[0]
+}
+
+export async function getTeamStatsByGame (id: number | undefined): Promise<TeamGame> {
+  try {
+    const res = await ApiClient.get('games/teams/', {
+      params: {
+        gameId: id
+      }
+    })
+    return res.data[0] as TeamGame
+  } catch (error) {
+    throw new Error(`API ${error}`)
+  }
+}
+
+export async function getHomeTeamStats (id: number | undefined): Promise<TeamStat | undefined> {
+  const res = await getTeamStatsByGame(id)
+  return res.teams.find(team => team.homeAway === 'home')
+}
+
+export async function getAwayTeamStats (id: number | undefined): Promise<TeamStat | undefined> {
+  const res = await getTeamStatsByGame(id)
+  return res.teams.find(team => team.homeAway === 'away')
 }
 
 export async function fetchSeasonGamesByTeam (season: number, school: string | undefined): Promise<Game[]> {

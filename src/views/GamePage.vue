@@ -37,17 +37,30 @@
         <div class="excitement-index">
             Excitement Index: {{ precise(game.excitement_index) }}
         </div>
+
+        <StatComparison v-for="(stat, index) in homeStats.stats"
+        :key="index"
+        :stat="stat.category"
+        :homeVal="stat.stat"
+        :awayVal="awayStats.stats[index].stat"/>
+
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onBeforeMount, ref } from 'vue'
-import { getGameById, getTeamLogo } from '@/api/api'
-import { Game } from '@/store/models'
+import { getGameById, getTeamLogo, getTeamStatsByGame, getHomeTeamStats, getAwayTeamStats } from '@/api/api'
+import { Game, TeamGame, TeamStat } from '@/store/models'
+import StatComparison from '@/components/StatComparison.vue'
+
 export default defineComponent({
   props: {
     id: Number
+  },
+
+  components: {
+    StatComparison
   },
 
   setup (props) {
@@ -63,15 +76,38 @@ export default defineComponent({
       awayLogoPath.value = await getTeamLogo(game.value?.away_team)
     }
 
+    const gameStats = ref<TeamGame>()
+    const getGameStats = async () => {
+      gameStats.value = await getTeamStatsByGame(props.id)
+    }
+
+    const homeStats = ref<TeamStat>()
+    const getHomeStats = async () => {
+      homeStats.value = await getHomeTeamStats(props.id)
+    }
+
+    const awayStats = ref<TeamStat>()
+    const getAwayStats = async () => {
+      awayStats.value = await getAwayTeamStats(props.id)
+    }
+
     onBeforeMount(getGameInfo)
+    onBeforeMount(getGameStats)
+    onBeforeMount(getHomeStats)
+    onBeforeMount(getAwayStats)
     onBeforeMount(getLogoPaths)
 
     return {
       game,
       getGameInfo,
+      gameStats,
+      getGameStats,
+      homeStats,
+      getHomeStats,
+      awayStats,
+      getAwayStats,
       homeLogoPath,
-      awayLogoPath,
-      getLogoPaths
+      awayLogoPath
     }
   },
 
@@ -82,7 +118,6 @@ export default defineComponent({
       const year = date.slice(0, 4)
       return day + '/' + month + '/' + year
     },
-
     precise (x: string): string {
       return Number.parseFloat(x).toPrecision(3)
     }
