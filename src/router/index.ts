@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/Home.vue'
 import TeamPage from '@/views/TeamPage.vue'
+import GamePage from '@/views/GamePage.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -20,6 +21,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/teams/:school',
     name: 'Team',
     component: TeamPage,
+    props: true
+  },
+  {
+    path: '/games/:id',
+    name: 'Game',
+    component: GamePage,
     props: true
   }
 ]
