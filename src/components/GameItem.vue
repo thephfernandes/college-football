@@ -1,14 +1,13 @@
 <template>
   <div class="game-item">
-            <router-link :to="{path: '/games/' + game.id }" id="game-link">
-
+    <router-link :to="{path: '/games/' + game.id }" id="game-link">
       <div class="match-info">
-          <div class="venue-info">
-            {{ game.venue }}
-          </div>
-          <div class="match-date">
-            {{ formatDate(game.start_date) }}
-          </div>
+        <div class="venue-info">
+          {{ game.venue }}
+        </div>
+        <div class="match-date">
+          {{ formatDate(game.start_date) }}
+        </div>
 
         <div class="season-info">
           {{ game.season_type }} playoff
@@ -16,33 +15,32 @@
       </div>
 
       <div class="teams-info">
-          <img :src="homeLogoPath" alt="" class="team-logo">
+        <img :src="homeLogoPath" alt="" class="team-logo">
 
-          <div class="home team-title">
-              {{ homeTeam }}
-          </div>
+        <div class="home team-title">
+            {{ homeTeam }}
+        </div>
 
-          <div class="home team-score">
-              {{ formatScore(game.home_points) }}
-          </div>
+        <div class="home team-score">
+          {{ formatScore(game.home_points) }}
+        </div>
 
-          <img :src="awayLogoPath" alt="" class="team-logo">
+        <img :src="awayLogoPath" alt="" class="team-logo">
 
-          <div class="away team-title">
-            {{ awayTeam }}
-          </div>
+        <div class="away team-title">
+          {{ awayTeam }}
+        </div>
 
-         <div class="away team-score">
-            {{ formatScore(game.away_points) }}
-          </div>
+        <div class="away team-score">
+          {{ formatScore(game.away_points) }}
+        </div>
       </div>
-        </router-link>
-
+    </router-link>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onBeforeMount, ref } from 'vue'
 import { Game } from '@/store/models'
 import { getTeamLogo } from '@/api/api'
 
@@ -61,7 +59,7 @@ export default defineComponent({
       awayLogoPath.value = await getTeamLogo(awayTeam)
     }
 
-    onMounted(getLogoPaths)
+    onBeforeMount(getLogoPaths)
 
     return {
       homeTeam,

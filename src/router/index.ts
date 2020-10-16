@@ -3,6 +3,12 @@ import Home from '../views/Home.vue'
 import TeamPage from '@/views/TeamPage.vue'
 import GamePage from '@/views/GamePage.vue'
 
+function castRouteParam (route: { params: { id: any } }) {
+  return {
+    id: Number(route.params.id)
+  }
+}
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -27,7 +33,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/games/:id',
     name: 'Game',
     component: GamePage,
-    props: true
+    props: castRouteParam
   }
 ]
 

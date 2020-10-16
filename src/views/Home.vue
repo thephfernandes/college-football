@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onBeforeMount, ref } from 'vue'
 import TeamItem from '@/components/TeamItem.vue'
 import { fetchTeams } from '@/api/api'
 import { Team } from '@/store/models'
@@ -24,7 +24,7 @@ export default defineComponent({
     const getTeams = async () => {
       teams.value = await fetchTeams()
     }
-    onMounted(getTeams)
+    onBeforeMount(getTeams)
 
     return {
       teams,

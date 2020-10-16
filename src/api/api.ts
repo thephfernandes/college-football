@@ -59,3 +59,16 @@ export async function getStats (season: number | undefined, school: string | und
     throw new Error(`API ${error}`)
   }
 }
+
+export async function getGameById (gameId: number | undefined): Promise<Game> {
+  try {
+    const res = await ApiClient.get('games', {
+      params: {
+        id: gameId
+      }
+    })
+    return res.data[0] as Game
+  } catch (error) {
+    throw new Error(`API ${error}`)
+  }
+}
