@@ -1,11 +1,12 @@
 <template>
   <div class="game-item">
+    <router-link :to="{path: '/games/' + game.id }" id="game-link">
       <div class="match-info">
         <div class="venue-info">
           {{ game.venue }}
         </div>
         <div class="match-date">
-            {{ formatDate(game.start_date) }}
+          {{ formatDate(game.start_date) }}
         </div>
 
         <div class="season-info">
@@ -14,36 +15,32 @@
       </div>
 
       <div class="teams-info">
-          <img :src="homeLogoPath" alt="" class="team-logo">
+        <img :src="homeLogoPath" alt="" class="team-logo">
 
-          <div class="home team-title">
-              {{ homeTeam }}
-          </div>
-
-          <div class="home team-score">
-              {{ formatScore(game.home_points) }}
-          </div>
-
-          <img :src="awayLogoPath" alt="" class="team-logo">
-
-          <div class="away team-title">
-            {{ awayTeam }}
-          </div>
-
-         <div class="away team-score">
-            {{ formatScore(game.away_points) }}
-          </div>
-        <!-- <div class="home team-info">
+        <div class="home team-title">
+            {{ homeTeam }}
         </div>
 
-        <div class="away team-info">
-        </div> -->
+        <div class="home team-score">
+          {{ formatScore(game.home_points) }}
+        </div>
+
+        <img :src="awayLogoPath" alt="" class="team-logo">
+
+        <div class="away team-title">
+          {{ awayTeam }}
+        </div>
+
+        <div class="away team-score">
+          {{ formatScore(game.away_points) }}
+        </div>
       </div>
+    </router-link>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onBeforeMount, ref } from 'vue'
 import { Game } from '@/store/models'
 import { getTeamLogo } from '@/api/api'
 
@@ -62,7 +59,7 @@ export default defineComponent({
       awayLogoPath.value = await getTeamLogo(awayTeam)
     }
 
-    onMounted(getLogoPaths)
+    onBeforeMount(getLogoPaths)
 
     return {
       homeTeam,
@@ -100,7 +97,9 @@ $width: 300px;
     box-shadow: rgba(0, 0, 0, 0.0588235) 0px 3px 4px 0px;
     height: $height;
     width: $width;
-
+    #game-link {
+      text-decoration: none;
+    }
     .match-info {
         background-color: #505050;
         border-radius: 10px 10px 0px 0px;
@@ -114,6 +113,7 @@ $width: 300px;
 
     .teams-info {
     font-size: 1.2em;
+    text-decoration: none;
     display: grid;
     grid-template-columns: auto auto auto;
     grid-gap: 10px;
@@ -129,12 +129,14 @@ $width: 300px;
         padding-top: 5%;
         margin-left: 0px;
         margin-right: auto;
+        text-decoration: none;
       }
 
       .team-score {
         padding-top: 10%;
         margin-left: 0px;
         margin-right: auto;
+        text-decoration: none;
       }
     }
 }

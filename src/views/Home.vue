@@ -1,15 +1,16 @@
 <template>
   <div class="home">
+    <input type="text" v-model="search" placeholder="search...">
     <keep-alive>
       <div class="team-list">
-      <TeamItem v-for="team in teams" :key="team.id" :school="team.school" :logo="getTeamLogo(team)"/>
+      <TeamItem v-for="team in filteredTeams" :key="team.id" :school="team.school" :logo="getTeamLogo(team)"/>
     </div>
     </keep-alive>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onBeforeMount, ref } from 'vue'
 import TeamItem from '@/components/TeamItem.vue'
 import { fetchTeams } from '@/api/api'
 import { Team } from '@/store/models'
@@ -19,12 +20,18 @@ export default defineComponent({
     TeamItem
   },
 
+  data () {
+    return {
+      search: ''
+    }
+  },
+
   setup () {
     const teams = ref<Team[]>([])
     const getTeams = async () => {
       teams.value = await fetchTeams()
     }
-    onMounted(getTeams)
+    onBeforeMount(getTeams)
 
     return {
       teams,
@@ -39,6 +46,14 @@ export default defineComponent({
       } else {
         return '../assets/altLogo.png'
       }
+    }
+  },
+
+  computed: {
+    filteredTeams (): Team[] {
+      return this.teams.filter((team: Team) => {
+        return team.school.toLocaleLowerCase().includes(this.search.toLocaleLowerCase())
+      })
     }
   }
 })

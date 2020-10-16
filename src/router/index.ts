@@ -1,6 +1,13 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/Home.vue'
 import TeamPage from '@/views/TeamPage.vue'
+import GamePage from '@/views/GamePage.vue'
+
+function castRouteParam (route: { params: { id: any } }) {
+  return {
+    id: Number(route.params.id)
+  }
+}
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -21,6 +28,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Team',
     component: TeamPage,
     props: true
+  },
+  {
+    path: '/games/:id',
+    name: 'Game',
+    component: GamePage,
+    props: castRouteParam
   }
 ]
 

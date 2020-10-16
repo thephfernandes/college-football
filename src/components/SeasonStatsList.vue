@@ -35,7 +35,7 @@ export default defineComponent({
   },
 
   watch: {
-    season (value) {
+    season () {
       this.getTeamStats()
     }
   }

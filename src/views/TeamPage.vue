@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onBeforeMount, ref } from 'vue'
 import GameList from '@/components/GameList.vue'
 import SeasonStatsList from '@/components/SeasonStatsList.vue'
 import { fetchSeasonGamesByTeam, fetchTeamBySchoolName, getTeamLogo } from '@/api/api'
@@ -48,8 +48,8 @@ export default defineComponent({
       logoPath.value = await getTeamLogo(props.school)
     }
 
-    onMounted(getGames)
-    onMounted(getLogoPath)
+    onBeforeMount(getGames)
+    onBeforeMount(getLogoPath)
 
     return {
       games,
