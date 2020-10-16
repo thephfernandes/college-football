@@ -1,36 +1,59 @@
 <template>
   <div class="home">
-    <div class="team-list">
-      <div class="team-item" v-for="(team, index) in teams" :key="index">
-        <div class="team-logo">
-          <!-- {{ team.logos }} -->
-          <!-- <img :src="team.logos[0]"/> -->
-        </div>
-        <div class="team-school">
-          {{ team.school }}
-          </div>
-      </div>
+    <input type="text" v-model="search" placeholder="search...">
+    <keep-alive>
+      <div class="team-list">
+      <TeamItem v-for="team in filteredTeams" :key="team.id" :school="team.school" :logo="getTeamLogo(team)"/>
     </div>
+    </keep-alive>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onBeforeMount, ref } from 'vue'
+import TeamItem from '@/components/TeamItem.vue'
 import { fetchTeams } from '@/api/api'
 import { Team } from '@/store/models'
 
 export default defineComponent({
+  components: {
+    TeamItem
+  },
+
+  data () {
+    return {
+      search: ''
+    }
+  },
+
   setup () {
     const teams = ref<Team[]>([])
     const getTeams = async () => {
       teams.value = await fetchTeams()
-      console.log(teams.value[0].logos[0])
     }
-    onMounted(getTeams)
+    onBeforeMount(getTeams)
 
     return {
       teams,
       getTeams
+    }
+  },
+
+  methods: {
+    getTeamLogo (team: Team): string {
+      if (team.logos) {
+        return team.logos[0]
+      } else {
+        return '../assets/altLogo.png'
+      }
+    }
+  },
+
+  computed: {
+    filteredTeams (): Team[] {
+      return this.teams.filter((team: Team) => {
+        return team.school.toLocaleLowerCase().includes(this.search.toLocaleLowerCase())
+      })
     }
   }
 })
@@ -41,6 +64,7 @@ $width: 250px;
 
 .team-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax($width, 1fr))
+  grid-template-columns: repeat(auto-fit, minmax($width, 1fr));
+  grid-gap: 1em;
 }
 </style>
